@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Dashboard</title>
+    <style>
+        /* Modern CSS Reset and Base Styles */
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            color: #1b5e20;
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(145deg, #43a047, #2e7d32);
+            color: white;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 20px rgba(46, 125, 50, 0.2);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        nav {
+            display: flex;
+            gap: 1.2rem;
+        }
+
+        .nav-button {
+            color: white;
+            text-decoration: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Community Section Styles */
+        .community-section {
+            max-width: 1000px;
+            margin: 3rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .community-card {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(67, 160, 71, 0.1);
+        }
+
+        .community-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        h3 {
+            margin: 0 0 1.5rem 0;
+            font-size: 1.8rem;
+            color: #1b5e20;
+            font-weight: 700;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #2e7d32;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 1rem;
+            margin-top: 0.5rem;
+            border: 2px solid #a5d6a7;
+            border-radius: 12px;
+            font-size: 1rem;
+            background-color: rgba(255, 255, 255, 0.9);
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus, textarea:focus {
+            border-color: #43a047;
+            background-color: #fff;
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(67, 160, 71, 0.1);
+        }
+
+        button {
+            background: linear-gradient(145deg, #43a047, #2e7d32);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 15px rgba(46, 125, 50, 0.2);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(46, 125, 50, 0.3);
+        }
+
+        /* Community List Styles */
+        .community-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .community-item {
+            border-bottom: 1px solid #a5d6a7;
+            padding: 1.5rem 0;
+        }
+
+        .community-item:last-child {
+            border-bottom: none;
+        }
+
+        .community-item h4 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.4rem;
+            color: #1b5e20;
+        }
+
+        .posted-by {
+            font-size: 0.9rem;
+            color: #558b2f;
+            margin-bottom: 1rem;
+        }
+
+        .likes-comments {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .like-button, .comment-button {
+            padding: 0.6rem 1.2rem;
+            font-size: 0.9rem;
+            border-radius: 10px;
+        }
+
+        /* Comments Section */
+        .comments-section {
+            margin-top: 1rem;
+        }
+
+        .comments-list {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0;
+        }
+
+        .comments-list li {
+            background-color: rgba(255, 255, 255, 0.5);
+            padding: 0.8rem;
+            margin-bottom: 0.8rem;
+            border-radius: 8px;
+        }
+
+        .comment-form textarea {
+            min-height: 100px;
+            resize: vertical;
+            margin: 1rem 0;
+        }
+
+        /* Error Message Styles */
+        .error-message {
+            background-color: #ffebee;
+            color: #d32f2f;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            display: none;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+                padding: 1rem;
+            }
+
+            .nav-button {
+                padding: 0.6rem 1rem;
+            }
+
+            .community-section {
+                padding: 0 1rem;
+            }
+
+            .community-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Community Dashboard</h1>
+        <nav>
+            <a href="{{url_for('home')}}" class="nav-button">Home</a>
+            <a href="{{url_for('carbon_tracker')}}" class="nav-button">Carbon Tracker</a>
+        </nav>
+    </header>
+
+    <div class="community-section">
+        <!-- Add a Post -->
+        <div class="community-card">
+            <h3>Add a Post</h3>
+            <form action="/community" method="POST">
+                <div class="form-group">
+                    <label for="post-title">Post Title:</label>
+                    <input type="text" id="post-title" name="title" required>
+                </div>
+                <div class="form-group">
+                    <button type="submit">Add Post</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- List of Posts -->
+        <div class="community-card">
+            <h3>Recent Posts</h3>
+            <ul class="community-list">
+                {% for post in posts %}
+                <li class="community-item">
+                    <h4>{{ post.title }}</h4>
+                    <div class="posted-by">Posted by: <strong>{{ post.username }}</strong></div>
+                    <div class="likes-comments">
+                        <form class="like-form" data-post-id="{{ post.id }}">
+                            <button type="submit" class="like-button">Like</button>
+                            <span id="likes-count-{{ post.id }}">{{ post.likes }} Likes</span>
+                        </form>
+                    </div>
+
+                    <!-- Comments -->
+                    <div class="comments-section">
+                        <h5>Comments:</h5>
+                        <ul class="comments-list" id="comments-list-{{ post.id }}">
+                            {% for comment in post.comments %}
+                            <li>
+                                <strong>{{ comment.user_id }}:</strong> {{ comment.content }}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        <form class="comment-form" data-post-id="{{ post.id }}">
+                            <textarea name="content" placeholder="Add a comment..." required></textarea>
+                            <button type="submit" class="comment-button">Submit Comment</button>
+                        </form>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+    // Handle all like button submissions
+    document.querySelectorAll('.like-form').forEach(form => {
+        form.addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const postId = this.getAttribute('data-post-id');
+            const likeCount = document.querySelector(`#likes-count-${postId}`);
+
+            try {
+                const response = await fetch(`/like_post/${postId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    likeCount.textContent = `${data.likes} Likes`;
+                } else {
+                    alert(data.error || 'Error liking post');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error processing your request');
+            }
+        });
+    });
+
+    // Handle all comment form submissions
+    document.querySelectorAll('.comment-form').forEach(form => {
+        form.addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const postId = this.getAttribute('data-post-id');
+            const commentInput = this.querySelector('textarea');
+            const commentsList = document.querySelector(`#comments-list-${postId}`);
+
+            try {
+                const response = await fetch(`/add_comment/${postId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        content: commentInput.value
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    const newComment = document.createElement('li');
+                    newComment.innerHTML = `<strong>${data.user_id}:</strong> ${data.content}`;
+                    commentsList.appendChild(newComment);
+                    commentInput.value = '';
+                } else {
+                    alert(data.error || 'Error adding comment');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error processing your request');
+            }
+        });
+    });
+});
+
+    </script>
+</body>
+</html>
